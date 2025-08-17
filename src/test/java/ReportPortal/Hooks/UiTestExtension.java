@@ -14,7 +14,7 @@ public class UiTestExtension implements BeforeAllCallback {
 
     @Override
     public void beforeAll(@SuppressWarnings("NullableProblems") ExtensionContext context) {
-        Configuration.baseUrl = "https://demo.reportportal.io/ui/";
+        Configuration.baseUrl = getProperty("URL_UI");
         Configuration.browser = "chrome";
         Configuration.timeout = 10000;
         open("");
