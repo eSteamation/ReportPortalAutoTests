@@ -1,6 +1,7 @@
 package ReportPortal.UI;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$x;
@@ -13,8 +14,8 @@ public class WidgetPage extends BasePage {
     protected final SelenideElement widgetDescription = $x("//textarea[@placeholder='Enter widget description']").as("Поле ввода описания виджета");
     protected final SelenideElement buttonAdd = $x("//button[text()='Add']").as("Кнопка 'Add'");
 
-
-    public void widgetCreation(String filterName, String name, String description) {
+    @Step("Создание виджета {name}")
+    public void widgetCreation(String name, String filterName, String description) {
         widgetType();
         buttonNext.click();
         searchByName.shouldBe(clickable);
@@ -27,11 +28,13 @@ public class WidgetPage extends BasePage {
         buttonAdd.click();
     }
 
+    @Step("Выбор типа виджета")
     public void widgetType() {
         TestCasesGrowth.shouldBe(visible);
         TestCasesGrowth.click();
     }
 
+    @Step("Ввод имени {name} и описания {description}")
     public void widgetInputs(String name, String description) {
         widgetName.shouldBe(visible);
         widgetName.setValue(name);
@@ -39,6 +42,7 @@ public class WidgetPage extends BasePage {
         widgetDescription.setValue(description);
     }
 
+    @Step("Выбор фильтра виджета")
     public void widgetFilter() {
         filterPick.shouldBe(clickable);
         filterPick.click();

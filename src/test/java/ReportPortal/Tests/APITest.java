@@ -2,13 +2,20 @@ package ReportPortal.Tests;
 
 import ReportPortal.API.DashboardCreator;
 import ReportPortal.Hooks.ApiTestExtension;
+import io.qameta.allure.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static ReportPortal.Utilities.ConfigLoader.getProperty;
 import static io.restassured.RestAssured.given;
 
+@Epic("Dashboard API")
+@Feature("Создание дешбордов при помощи API")
+@Owner("Michael")
+@Tag("API")
 @ExtendWith(ApiTestExtension.class)
 public class APITest {
 
@@ -20,7 +27,10 @@ public class APITest {
     private static final String TEMPLATE = getProperty("templateName");
     private final DashboardCreator dashboardCreator = new DashboardCreator();
 
+
     @Test
+    @DisplayName("Проверка доступа к API")
+    @Severity(SeverityLevel.BLOCKER)
     @Order(1)
     void HealthCheckAPI() {
         given()
@@ -32,6 +42,9 @@ public class APITest {
                 .statusCode(200);
     }
 
+    @DisplayName("Создание дешборда. Позитивный.")
+    @Description("Создаем дешборд через API с заданными параметрами и проверяем, что он успешно создался.")
+    @Severity(SeverityLevel.CRITICAL)
     @Test
     void CreationTestPositive() {
         dashboardCreator.jsonImport(TEMPLATE);
@@ -40,6 +53,9 @@ public class APITest {
         dashboardCreator.jsonVerify(PROJECT, API_KEY);
     }
 
+    @DisplayName("Создание дешборда. Негативный.")
+    @Description("Создаем дешборд с некорректными параметрами и проверяем, что он не был создан")
+    @Severity(SeverityLevel.BLOCKER)
     @Test
     void CreationTestNegative() {
         dashboardCreator.jsonImport(TEMPLATE);

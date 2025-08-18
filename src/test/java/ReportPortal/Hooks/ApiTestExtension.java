@@ -15,7 +15,7 @@ public class ApiTestExtension implements BeforeAllCallback {
     @Override
     public void beforeAll(@SuppressWarnings("NullableProblems") ExtensionContext context) {
         RestAssured.baseURI = getProperty("URL_API");
-        LogConfig logConfig = LogConfig.logConfig().blacklistHeaders(List.of("Bearer "));
+        LogConfig logConfig = LogConfig.logConfig().blacklistHeaders(List.of("Authorization"));
         RestAssured.config = RestAssured.config().logConfig(logConfig);
         RestAssured.filters(new AllureRestAssured());
     }
