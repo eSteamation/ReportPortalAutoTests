@@ -15,16 +15,22 @@ public class UiTest {
     private final LoginPage loginPage = new LoginPage();
     private final DashboardPage dashboardPage = new DashboardPage();
     private final WidgetPage widgetPage = new WidgetPage();
+    private static final String USERNAME = getProperty("username");
+    private static final String PASSWORD = getProperty("password");
+    private static final String DASH_NAME = getProperty("dashboardName");
+    private static final String FILTER = getProperty("filterName");
+    private static final String WIDGET = getProperty("widgetName");
+    private static final String WIDGET_DESC = getProperty("widgetDescription");
 
     @Test
     void LoginPageTest() {
         loginPage.loginWait();
-        loginPage.loginInput(getProperty("username"), getProperty("password"));
+        loginPage.loginInput(USERNAME, PASSWORD);
         dashboardPage.dashboardList();
-        dashboardPage.dashboardFilter(getProperty("dashboardName"));
+        dashboardPage.dashboardFilter(DASH_NAME);
         dashboardPage.dashboardOpen();
         dashboardPage.widgetCreate();
-        widgetPage.widgetCreation(getProperty("filterName"), getProperty("widgetName"), getProperty("widgetDescription"));
-        dashboardPage.nameVerify(getProperty("widgetName"));
+        widgetPage.widgetCreation(FILTER, WIDGET, WIDGET_DESC);
+        dashboardPage.nameVerify(WIDGET);
     }
 }
